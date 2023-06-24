@@ -24,7 +24,7 @@
                                 <button v-on:click.prevent="disminuir(index)">-</button>
                             </div>
                             <div class="col-md-4">
-                              <input type="text" size="2" v-model=cantidadProducto[index]>
+                              <input type="text" size="2" v-model=cantProduc[index]>
                             </div>
                             <div class="col-md-4">
                                 <button v-on:click.prevent="aumentar(index)">+</button>
@@ -48,31 +48,25 @@ export default{
          productos:{
             type: Array,
             required: true,
+         },
+         cantProduc:{
+            type: Array,
+            required: true
          }
       },
       data: function(){
         return{
-            cantidadProducto:[
-                0,
-                0,
-                0
-            ]
         }
       },
       methods: {
         aumentar: function(indiceAumentar){
-            this.cantidadProducto[indiceAumentar]+=1;
+            this.$emit('add',indiceAumentar);
         },
         disminuir: function(indiceDisminuir){
-            
-            if(this.cantidadProducto[indiceDisminuir]>0 ){
-                this.cantidadProducto[indiceDisminuir]-=1;
-            } else{
-                this.cantidadProducto[indiceDisminuir]=0;
-            }
+            this.$emit('reduce',indiceDisminuir);
         },
+      },
 
-      }
 }
   
 </script>

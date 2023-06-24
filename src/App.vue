@@ -1,26 +1,25 @@
 <template>
-
-
   <div id="appVue">
     <div id="ContenedorPadre" class="container">
       <div class="row">
         <div class="col-md-8">
           <ComponenteCarroCompras
-          v-bind:productos="datosPoleras"/>
+          v-bind:productos="datosPoleras"
+          :cantProduc="cantidadProductos"
+          @add="sumar"
+          @reduce="restar"/>
         </div>
         <div class="col-md-4">
-          <ComponentePagoCompras/>
+          <ComponentePagoCompras
+          :cantProducDos="cantidadProductos"
+          :pagoTotal="total"/>
         </div>
-
       </div>
     </div>
-
   </div>
- 
 </template>
 
 <script>
-
 import ComponenteCarroCompras from './components/ComponenteCarroCompras.vue';
 import ComponentePagoCompras from './components/ComponentePagoCompras.vue';
 export default {
@@ -52,7 +51,34 @@ data: function(){
         costoPolera:'45000',
       },
     ],
+    cantidadProductos:[
+                0,
+                0,
+                0
+            ],
+    total: [
+      0,
+      0,
+      0
+    ]
   }
+},
+methods: {
+  sumar: function(indiceAumentar) {
+    this.cantidadProductos[indiceAumentar]+=1;
+    this.total[indiceAumentar] = this.cantidadProductos[indiceAumentar] * Number(this.datosPoleras[indiceAumentar].costoPolera);
+  },
+
+  restar: function(indiceDisminuir) {
+    if(this.cantidadProductos[indiceDisminuir]>0 ) {
+      this.cantidadProductos[indiceDisminuir]--
+      this.total[indiceDisminuir] = this.cantidadProductos[indiceDisminuir] * Number(this.datosPoleras[indiceDisminuir].costoPolera);
+    } else {
+      this.cantidadProductos[indiceDisminuir] = 0;
+      this.total[indiceDisminuir] = 0;
+    }
+  },
+
 }
 }
 </script>
