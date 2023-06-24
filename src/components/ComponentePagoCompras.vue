@@ -68,7 +68,7 @@
     },
     methods:{
         costoEnvio: function() {
-            this.pagoEnvio = document.getElementById('envios').value;
+            this.pagoEnvio = Number(document.getElementById('envios').value);
         },
 
         aprobar: function() {
